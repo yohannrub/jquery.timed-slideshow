@@ -5,7 +5,7 @@ This plugin has available functions to go to a specific slide, play, pause and r
 Its timer uses an actual timekeeping by polling current time (as use of `setInterval()` only is not fully reliable for actual timekeeping).  
 It currently supports *slide* and *fade* transition effects.
 
-[**Demo page**](http://htmlpreview.github.com/?https://github.com/yohannrub/jquery.slideshow/blob/master/example/index.html)
+[**Demo page**](http://yohannrub.github.com/jquery.slideshow/)
 
 
 ## Usage
