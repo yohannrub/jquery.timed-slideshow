@@ -10,8 +10,12 @@
       width: 570px;
       margin: 50px auto;
     }
-    .slideshow-container .slideshow-slides p {
-      width: 570px;
+    .slideshow-container .slideshow-slides li {
+      width: 570px;  /* Required */
+      height: 270px; /* Required as images may not be loaded before slideshow initialization */
+    }
+    #slideshow-container-text .slideshow-slides li {
+      height: auto;  /* Let slideshow set automatic height */
     }
     .slideshow-container .slideshow-prev {
       display: inline-block;
@@ -125,10 +129,10 @@
     </div>
 </div>
 
-<div id="slideshow-container-fade-nocrossfade" class="slideshow-container">
+<div id="slideshow-container-text" class="slideshow-container">
     <ul class="slideshow-slides">
         <li><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in orci id tellus eleifend feugiat. Nunc justo risus, eleifend ac iaculis ac, fringilla vel orci. Nam pretium porta purus, in varius turpis posuere id. Aenean suscipit sodales neque eget tempor.</p></li>
-        <li><p>Suspendisse semper luctus cursus. Proin est lectus, tempus eu feugiat non, hendrerit quis metus. In vulputate augue nec odio mattis commodo. Vestibulum at interdum turpis. Nunc pellentesque dapibus mi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;</p></li>
+        <li><p>Suspendisse semper luctus cursus. Proin est lectus, tempus eu feugiat non, hendrerit quis metus. In vulputate augue nec odio mattis commodo. Vestibulum at interdum turpis. Nunc pellentesque dapibus mi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.</p></li>
         <li><p>Proin hendrerit, leo eu condimentum viverra, sem justo feugiat massa, sed convallis ligula massa at leo. Pellentesque faucibus malesuada nisl. Vivamus gravida tempus tellus sed feugiat. Nullam accumsan molestie justo sit amet tempor. Aenean leo libero, auctor a tempor sed, mattis at nibh.</p></li>
         <li><p>Curabitur vel mi nisl, nec aliquam ipsum. Nunc vitae hendrerit dolor. Morbi quis adipiscing orci. Fusce lacinia pulvinar magna a lobortis. Curabitur at nisi risus, non consectetur nisi. Suspendisse suscipit gravida consectetur. Maecenas blandit hendrerit elit, eget fringilla mauris fringilla ut.</p></li>
     </ul>
@@ -177,7 +181,7 @@ $('#slideshow-container-fade').slideshow({
         this.find('.pietimer-container').pietimer('reset');
     }
 });
-$('#slideshow-container-fade-nocrossfade').slideshow({
+$('#slideshow-container-text').slideshow({
     autoPlay: false,
     displayDuration: 4500,
     transitionDuration: 500,
