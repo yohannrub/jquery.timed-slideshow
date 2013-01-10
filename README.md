@@ -79,6 +79,11 @@ $('#slideshow-container').slideshow({
 
 ## Styling
 
+**Note:**
+
+* Always define a CSS width for slide list-items
+* Either define a CSS height for slide list-items *containing images*, or preload images before slideshow initialization
+
 The current active slide and pagination item elements can be styled using the 'active' CSS class.
 
 ```css
