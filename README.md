@@ -2,7 +2,7 @@
 
 jQuery Timed Slideshow is a lightweight jQuery slideshow plugin with timing animation controls and automatic pagination features.  
 This plugin has available functions to go to a specific slide, play, pause and reset the internal timer.  
-Its timer uses an actual timekeeping by polling current time (as use of `setInterval()` only is not fully reliable for actual timekeeping).  
+Its internal timer uses an actual timekeeping by polling current time (as use of `setInterval()` only is not fully reliable for actual timekeeping).  
 It currently supports *slide* and *fade* transition effects.
 
 [**Demo page**](http://yohannrub.github.com/jquery.timed-slideshow/)
@@ -10,9 +10,9 @@ It currently supports *slide* and *fade* transition effects.
 
 ## Usage
 
-Apply a specific CSS class (defaults to 'slideshow-slides', see *Options*) to your list of slides, and wrap a parent block element around it.  
-You can also add *prev*/*next* buttons and pagination elements by applying specific CSS classes (see *Options*).  
-You can apply the slideshow functions to the parent block element.
+Put your list of slides inside a parent block element, and apply it the CSS class 'slideshow-slides' (by default, see *Options*).  
+You can also add *prev* / *next* buttons and pagination elements by putting them inside the parent block element, and applying them specific CSS classes (see *Options*).  
+Example:
 
 ```html
 <div id="slideshow-container">
@@ -29,6 +29,8 @@ You can apply the slideshow functions to the parent block element.
     </div>
 </div>
 ```
+
+You can then apply the slideshow functions to the parent block element:
 
 ```javascript
 // Initialize the slideshow for #slideshow-container
