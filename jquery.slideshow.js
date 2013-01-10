@@ -1,5 +1,5 @@
 /*!
- * jQuery Slideshow v@1.0
+ * jQuery Slideshow v@1.0.1
  * https://github.com/yohannrub/jquery.slideshow
  * Licensed under the MIT license
  */
@@ -63,7 +63,8 @@
                     'margin': 0,
                     'padding': 0,
                     'position': 'relative',
-                    'list-style': 'none'
+                    'list-style': 'none',
+                    'overflow': 'hidden'
                 });
 
                 if (data.transitionEffect == 'fade') {
@@ -76,7 +77,7 @@
                         'opacity': 1
                     });
                     data.$slidesUL.css({
-                        'height': Math.max.apply(null, data.$slidesLI.map(function () {return $(this).outerHeight(true);}).get())
+                        'height': Math.max.apply(null, data.$slidesLI.map(function() {return $(this).outerHeight(true);}).get())
                     });
                     if (!data.transitionCrossfade) {
                         data.transitionDuration = data.transitionDuration / 2;
