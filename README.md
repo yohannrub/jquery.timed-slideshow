@@ -1,11 +1,11 @@
-# jQuery Slideshow
+# jQuery Timed Slideshow
 
-jQuery Slideshow is a lightweight jQuery slideshow plugin with timing animation controls and automatic pagination features.  
+jQuery Timed Slideshow is a lightweight jQuery slideshow plugin with timing animation controls and automatic pagination features.  
 This plugin has available functions to go to a specific slide, play, pause and reset the internal timer.  
 Its timer uses an actual timekeeping by polling current time (as use of `setInterval()` only is not fully reliable for actual timekeeping).  
 It currently supports *slide* and *fade* transition effects.
 
-[**Demo page**](http://yohannrub.github.com/jquery.slideshow/)
+[**Demo page**](http://yohannrub.github.com/jquery.timed-slideshow/)
 
 
 ## Usage

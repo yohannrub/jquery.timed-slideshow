@@ -1,6 +1,6 @@
 /*!
- * jQuery Slideshow v@1.0.1
- * https://github.com/yohannrub/jquery.slideshow
+ * jQuery Timed Slideshow v@1.0.1
+ * https://github.com/yohannrub/jquery.timed-slideshow
  * Licensed under the MIT license
  */
 
