@@ -156,16 +156,12 @@
 // Initialize slideshows
 $('#slideshow-container-basic').slideshow({
     autoPlay: false,
-    displayDuration: 4500,
-    transitionDuration: 500,
     transitionStartCallback: function() {
         this.find('.pietimer-container').pietimer('reset');
     }
 });
 $('#slideshow-container-vertical').slideshow({
     autoPlay: false,
-    displayDuration: 4500,
-    transitionDuration: 500,
     transitionDirectionSlide: 'vertical',
     transitionStartCallback: function() {
         this.find('.pietimer-container').pietimer('reset');
@@ -173,8 +169,6 @@ $('#slideshow-container-vertical').slideshow({
 });
 $('#slideshow-container-fade').slideshow({
     autoPlay: false,
-    displayDuration: 4500,
-    transitionDuration: 500,
     transitionEffect: 'fade',
     transitionCrossfade: true,
     transitionStartCallback: function() {
@@ -183,8 +177,6 @@ $('#slideshow-container-fade').slideshow({
 });
 $('#slideshow-container-text').slideshow({
     autoPlay: false,
-    displayDuration: 4500,
-    transitionDuration: 500,
     transitionEffect: 'fade',
     transitionStartCallback: function() {
         this.find('.pietimer-container').pietimer('reset');
@@ -192,36 +184,28 @@ $('#slideshow-container-text').slideshow({
 });
 
 // Initialize pietimers
-$('.pietimer-container').pietimer({duration: 5000});
+$('.pietimer-container').pietimer();
 
 // Timing action handlers
 $('.timing-play').click(function() {
     var $slideshowContainer = $(this).parents('.slideshow-container');
+    $slideshowContainer.slideshow('play');
     $slideshowContainer.find('.pietimer-container').pietimer('play');
-    setTimeout(function() {
-        $slideshowContainer.slideshow('play');
-    }, 500);
 });
 $('.timing-pause').click(function() {
     var $slideshowContainer = $(this).parents('.slideshow-container');
+    $slideshowContainer.slideshow('pause');
     $slideshowContainer.find('.pietimer-container').pietimer('pause');
-    setTimeout(function() {
-        $slideshowContainer.slideshow('pause');
-    }, 500);
 });
 $('.timing-reset').click(function() {
     var $slideshowContainer = $(this).parents('.slideshow-container');
+    $slideshowContainer.slideshow('reset');
     $slideshowContainer.find('.pietimer-container').pietimer('reset');
-    setTimeout(function() {
-        $slideshowContainer.slideshow('reset');
-    }, 500);
 });
 
 // Start pietimers and slideshows
+$('.slideshow-container').slideshow('play');
 $('.pietimer-container').pietimer('play');
-setTimeout(function() {
-    $('.slideshow-container').slideshow('play');
-}, 500);
 </script>
 </body>
 </html>
