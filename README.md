@@ -61,7 +61,7 @@ Some options can be passed at initialization (the following values are defaults)
 // Initialize the slideshow for #slideshow-container with passed options
 $('#slideshow-container').slideshow({
     autoPlay: true,                          // whether or not to auto-play at initialization
-    displayDuration: 5000,                   // duration of display of each slide (in ms)
+    duration: 5000,                          // duration of display of each slide, including transition (in ms)
     transitionDuration: 500,                 // duration of transition between each slide (in ms)
     transitionEffect: 'slide',               // effect of transition ('slide' or 'fade')
     transitionDirectionSlide: 'horizontal',  // direction of transition when using 'slide' effect ('horizontal' or 'vertical')

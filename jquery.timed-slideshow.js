@@ -1,5 +1,5 @@
 /*!
- * jQuery Timed Slideshow v@1.0.1
+ * jQuery Timed Slideshow v@1.0.2
  * https://github.com/yohannrub/jquery.timed-slideshow
  * Licensed under the MIT license
  */
@@ -8,7 +8,7 @@
 
     var DEFAULT_SETTINGS = {
         autoPlay: true,
-        displayDuration: 5000,
+        duration: 5000,
         transitionDuration: 500,
         transitionEffect: 'slide',
         transitionDirectionSlide: 'horizontal',
@@ -42,7 +42,7 @@
                 data.isPlaying = false;
                 data.timer = null;
                 data.timeStart = null;
-                data.timeRemaining = data.displayDuration;
+                data.timeRemaining = data.duration;
                 data.transitionRunning = false;
                 data.transitionCssProperty = transitionDirectionSlideVertical ? 'top' : 'left';
                 data.sizeCssProperty = transitionDirectionSlideVertical ? 'height' : 'width';
@@ -145,7 +145,6 @@
                     var transitionEndFunction = function() {
                         data.transitionRunning = false;
                         data.transitionEndCallback.call($this, newIndex);
-                        $this[namespace]('reset');
                     };
 
                     if (data.transitionEffect == 'fade') {
@@ -171,6 +170,8 @@
                     }
 
                     data.currentIndex = newIndex;
+
+                    $this[namespace]('reset');
                 }
             });
         },
@@ -211,7 +212,7 @@
                 var $this = $(this);
                 var data = $this.data(namespace);
 
-                data.timeRemaining = data.displayDuration;
+                data.timeRemaining = data.duration;
                 data.isPlaying = false;
                 $this[namespace]('play');
             });
