@@ -5,17 +5,32 @@
     * {
       margin: 0;
     }
+    ul {
+      list-style: none;
+    }
+    table {
+      width: 100%;
+    }
+    td {
+      vertical-align: top;
+    }
 
     .slideshow-container {
       width: 570px;
       margin: 50px auto;
     }
     .slideshow-container .slideshow-slides li {
-      width: 570px;  /* Required */
-      height: 270px; /* Required as images may not be loaded before slideshow initialization */
+      width: 570px;  /* Required for images slides */
+      height: 270px; /* Required for images slides */
     }
     #slideshow-container-text .slideshow-slides li {
-      height: auto;  /* Let slideshow set automatic height */
+      width: 530px;  /* Required for text slides */
+      height: auto;  /* Set automatic height for text slides */
+      margin: 20px;
+    }
+    #slideshow-container-text .slideshow-slides-container {
+      border: 1px solid #aaaaaa;
+      box-shadow: 0px 0px 10px 2px #aaaaaa;
     }
     .slideshow-container .slideshow-prev {
       display: inline-block;
@@ -33,9 +48,6 @@
     }
     .slideshow-container .slideshow-pagination {
       float: right;
-    }
-    .slideshow-container .slideshow-pagination ul {
-      list-style: none;
     }
     .slideshow-container .slideshow-pagination ul li {
       display: inline-block;
@@ -69,85 +81,98 @@
 
 <body>
 
-<div id="slideshow-container-basic" class="slideshow-container">
-    <ul class="slideshow-slides">
-        <li><img src="img/image1.jpg" /></li>
-        <li><img src="img/image2.jpg" /></li>
-        <li><img src="img/image3.jpg" /></li>
-        <li><img src="img/image4.jpg" /></li>
-    </ul>
-    <div>
-        <div class="slideshow-pagination"></div>
-        <a class="slideshow-prev"></a>
-        <a class="slideshow-next"></a>
-    </div>
-    <div>
-        <input class="timing-play" type="button" value="Play" />
-        <input class="timing-pause" type="button" value="Pause" />
-        <input class="timing-reset" type="button" value="Reset" />
-        <div class="pietimer-container"></div>
-    </div>
-</div>
-
-<div id="slideshow-container-vertical" class="slideshow-container">
-    <ul class="slideshow-slides">
-        <li><img src="img/image1.jpg" /></li>
-        <li><img src="img/image2.jpg" /></li>
-        <li><img src="img/image3.jpg" /></li>
-        <li><img src="img/image4.jpg" /></li>
-    </ul>
-    <div>
-        <div class="slideshow-pagination"></div>
-        <a class="slideshow-prev"></a>
-        <a class="slideshow-next"></a>
-    </div>
-    <div>
-        <input class="timing-play" type="button" value="Play" />
-        <input class="timing-pause" type="button" value="Pause" />
-        <input class="timing-reset" type="button" value="Reset" />
-        <div class="pietimer-container"></div>
-    </div>
-</div>
-
-<div id="slideshow-container-fade" class="slideshow-container">
-    <ul class="slideshow-slides">
-        <li><img src="img/image1.jpg" /></li>
-        <li><img src="img/image2.jpg" /></li>
-        <li><img src="img/image3.jpg" /></li>
-        <li><img src="img/image4.jpg" /></li>
-    </ul>
-    <div>
-        <div class="slideshow-pagination"></div>
-        <a class="slideshow-prev"></a>
-        <a class="slideshow-next"></a>
-    </div>
-    <div>
-        <input class="timing-play" type="button" value="Play" />
-        <input class="timing-pause" type="button" value="Pause" />
-        <input class="timing-reset" type="button" value="Reset" />
-        <div class="pietimer-container"></div>
-    </div>
-</div>
-
-<div id="slideshow-container-text" class="slideshow-container">
-    <ul class="slideshow-slides">
-        <li><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque in orci id tellus eleifend feugiat. Nunc justo risus, eleifend ac iaculis ac, fringilla vel orci. Nam pretium porta purus, in varius turpis posuere id. Aenean suscipit sodales neque eget tempor.</p></li>
-        <li><p>Suspendisse semper luctus cursus. Proin est lectus, tempus eu feugiat non, hendrerit quis metus. In vulputate augue nec odio mattis commodo. Vestibulum at interdum turpis. Nunc pellentesque dapibus mi. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae.</p></li>
-        <li><p>Proin hendrerit, leo eu condimentum viverra, sem justo feugiat massa, sed convallis ligula massa at leo. Pellentesque faucibus malesuada nisl. Vivamus gravida tempus tellus sed feugiat. Nullam accumsan molestie justo sit amet tempor. Aenean leo libero, auctor a tempor sed, mattis at nibh.</p></li>
-        <li><p>Curabitur vel mi nisl, nec aliquam ipsum. Nunc vitae hendrerit dolor. Morbi quis adipiscing orci. Fusce lacinia pulvinar magna a lobortis. Curabitur at nisi risus, non consectetur nisi. Suspendisse suscipit gravida consectetur. Maecenas blandit hendrerit elit, eget fringilla mauris fringilla ut.</p></li>
-    </ul>
-    <div>
-        <div class="slideshow-pagination"></div>
-        <a class="slideshow-prev"></a>
-        <a class="slideshow-next"></a>
-    </div>
-    <div>
-        <input class="timing-play" type="button" value="Play" />
-        <input class="timing-pause" type="button" value="Pause" />
-        <input class="timing-reset" type="button" value="Reset" />
-        <div class="pietimer-container"></div>
-    </div>
-</div>
+<table>
+    <tr>
+        <td>
+            <div id="slideshow-container-basic" class="slideshow-container">
+                <ul class="slideshow-slides">
+                    <li><img src="img/image1.jpg" /></li>
+                    <li><img src="img/image2.jpg" /></li>
+                    <li><img src="img/image3.jpg" /></li>
+                    <li><img src="img/image4.jpg" /></li>
+                </ul>
+                <div>
+                    <div class="slideshow-pagination"></div>
+                    <a class="slideshow-prev"></a>
+                    <a class="slideshow-next"></a>
+                </div>
+                <div>
+                    <input class="timing-play" type="button" value="Play" />
+                    <input class="timing-pause" type="button" value="Pause" />
+                    <input class="timing-reset" type="button" value="Reset" />
+                    <div class="pietimer-container"></div>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div id="slideshow-container-vertical" class="slideshow-container">
+                <ul class="slideshow-slides">
+                    <li><img src="img/image1.jpg" /></li>
+                    <li><img src="img/image2.jpg" /></li>
+                    <li><img src="img/image3.jpg" /></li>
+                    <li><img src="img/image4.jpg" /></li>
+                </ul>
+                <div>
+                    <div class="slideshow-pagination"></div>
+                    <a class="slideshow-prev"></a>
+                    <a class="slideshow-next"></a>
+                </div>
+                <div>
+                    <input class="timing-play" type="button" value="Play" />
+                    <input class="timing-pause" type="button" value="Pause" />
+                    <input class="timing-reset" type="button" value="Reset" />
+                    <div class="pietimer-container"></div>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div id="slideshow-container-fade" class="slideshow-container">
+                <ul class="slideshow-slides">
+                    <li><img src="img/image1.jpg" /></li>
+                    <li><img src="img/image2.jpg" /></li>
+                    <li><img src="img/image3.jpg" /></li>
+                    <li><img src="img/image4.jpg" /></li>
+                </ul>
+                <div>
+                    <div class="slideshow-pagination"></div>
+                    <a class="slideshow-prev"></a>
+                    <a class="slideshow-next"></a>
+                </div>
+                <div>
+                    <input class="timing-play" type="button" value="Play" />
+                    <input class="timing-pause" type="button" value="Pause" />
+                    <input class="timing-reset" type="button" value="Reset" />
+                    <div class="pietimer-container"></div>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div id="slideshow-container-text" class="slideshow-container">
+                <div class="slideshow-slides-container">
+                    <ul class="slideshow-slides">
+                        <li><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam metus, accumsan nec auctor et, hendrerit vel tellus. Nunc dapibus semper dui, quis suscipit massa tempus a. Nulla bibendum ultricies libero, in elementum risus accumsan eget. In lobortis adipiscing felis, sit amet bibendum mauris tristique quis. Nam sodales orci at odio ultricies vulputate. Suspendisse facilisis sem quis enim ultricies id pretium nisl congue.</p></li>
+                        <li><p>Morbi sit amet erat tristique velit cursus malesuada quis non tortor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Praesent tristique elementum libero, vitae elementum mi tincidunt id. Quisque bibendum, dui vitae blandit semper, risus leo vestibulum orci, pretium posuere justo augue ut lacus. Ut facilisis blandit tortor, id laoreet lectus tincidunt quis. Maecenas accumsan tincidunt mattis. Fusce vitae nisl urna. Nulla ac rutrum arcu. Duis blandit nunc urna, eu tempus dolor. Ut quis tincidunt risus. Etiam est risus, tincidunt sed sodales nec, molestie a quam. Nulla convallis, odio ut molestie iaculis, arcu diam congue eros, eget hendrerit massa eros ac elit. Morbi nec nisl id augue pretium condimentum vel ac neque. Nulla facilisi. Fusce at elit at diam pellentesque consectetur. Nulla facilisi.</p></li>
+                        <li><p>Morbi arcu velit, volutpat sit amet hendrerit in, suscipit id tortor. In non egestas erat. Donec rhoncus mauris ut orci auctor aliquet mollis felis faucibus. Cras pharetra leo eu arcu hendrerit quis dictum metus tincidunt. Vivamus porta mollis leo, in feugiat ipsum commodo vel. Integer vestibulum cursus sem, sed sagittis orci eleifend eget. Donec pretium neque a tellus dictum a interdum dui tempus. Vivamus elit orci, facilisis ac convallis at, lobortis id lorem. Donec malesuada aliquam ipsum vitae varius. Mauris rutrum, felis vel sollicitudin condimentum, eros ante vestibulum nunc, sit amet pharetra sem ante non sem. Maecenas lobortis tempor eros, eu ultrices sem vulputate id.</p></li>
+                        <li><p>In lobortis tempor erat, id venenatis velit auctor vel. Nullam non tortor et justo sodales porttitor in sit amet odio. Aliquam eu mauris id velit dignissim faucibus. Cras rutrum risus eget enim tincidunt eget porta mauris bibendum. In dignissim, arcu ac dignissim tristique, massa eros interdum ligula, eu adipiscing nibh dolor a turpis. Sed condimentum adipiscing lorem, quis feugiat lectus dictum vitae. Ut convallis pulvinar auctor.</p></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="slideshow-pagination"></div>
+                    <a class="slideshow-prev"></a>
+                    <a class="slideshow-next"></a>
+                </div>
+                <div>
+                    <input class="timing-play" type="button" value="Play" />
+                    <input class="timing-pause" type="button" value="Pause" />
+                    <input class="timing-reset" type="button" value="Reset" />
+                    <div class="pietimer-container"></div>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
 
 <script src="http://code.jquery.com/jquery-1.8.1.min.js"></script>
 <script src="js/jquery.timed-slideshow.min.js"></script>
