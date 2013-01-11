@@ -3,7 +3,7 @@
 jQuery Timed Slideshow is a lightweight jQuery slideshow plugin with timing animation controls and automatic pagination features.  
 This plugin has available functions to go to a specific slide, play, pause and reset the internal timer.  
 Its internal timer uses an actual timekeeping by polling current time (as use of `setInterval()` only is not fully reliable for actual timekeeping).  
-It currently supports *slide* and *fade* transition effects.
+It supports *slide* and *fade* transition effects.
 
 [**Demo page**](http://yohannrub.github.com/jquery.timed-slideshow/)
 
@@ -83,8 +83,8 @@ $('#slideshow-container').slideshow({
 
 **Note:**
 
-* Always define a CSS width for slide list-items
-* Either define a CSS height for slide list-items *containing images*, or preload images before slideshow initialization
+* For slide list-items containing images, you must either explicitly define CSS width and height of slide list-items or preload images before slideshow initialization
+* For slide list-items containing text, you must explicitly define CSS width of slide list-items
 
 The current active slide and pagination item elements can be styled using the 'active' CSS class.
 
