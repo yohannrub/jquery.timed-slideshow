@@ -16,12 +16,14 @@ Example:
 
 ```html
 <div id="slideshow-container">
-    <ul class="slideshow-slides">
-        <li><img src="img/image1.jpg" /></li>
-        <li><img src="img/image2.jpg" /></li>
-        <li><img src="img/image3.jpg" /></li>
-        <li><img src="img/image4.jpg" /></li>
-    </ul>
+    <div>
+        <ul class="slideshow-slides">
+            <li><img src="img/image1.jpg" /></li>
+            <li><img src="img/image2.jpg" /></li>
+            <li><img src="img/image3.jpg" /></li>
+            <li><img src="img/image4.jpg" /></li>
+        </ul>
+    </div>
     <div>
         <div class="slideshow-pagination"></div>
         <a class="slideshow-prev">Prev</a>
@@ -85,6 +87,16 @@ $('#slideshow-container').slideshow({
 
 * For slide list-items containing images, you must either explicitly define CSS width and height of slide list-items or preload images before slideshow initialization
 * For slide list-items containing text, you must explicitly define CSS width of slide list-items
+
+```css
+#slideshow-container-images .slideshow-slides li {
+  width: 500px;  /* Required for images slides */
+  height: 200px; /* Required for images slides */
+}
+#slideshow-container-text .slideshow-slides li {
+  width: 500px;  /* Required for text slides */
+}
+```
 
 The current active slide and pagination item elements can be styled using the 'active' CSS class.
 
