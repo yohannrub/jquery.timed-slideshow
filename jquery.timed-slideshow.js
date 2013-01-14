@@ -1,5 +1,5 @@
 /*!
- * jQuery Timed Slideshow v@1.0.2
+ * jQuery Timed Slideshow v@1.0.3
  * https://github.com/yohannrub/jquery.timed-slideshow
  * Licensed under the MIT license
  */
@@ -24,8 +24,9 @@
         paginationClass: 'slideshow-pagination'
     };
 
-    var GLOBALS = {};
-    GLOBALS.activeClass = 'active';
+    var DEFAULT_CLASSES = {
+        active: 'active'
+    };
 
     var namespace = 'slideshow';
 
@@ -92,7 +93,7 @@
                     $slidesContainer.css(data.sizeCssProperty, data.slidesLISize);
                 }
 
-                data.$slidesLI.eq(data.currentIndex).addClass(GLOBALS.activeClass);
+                data.$slidesLI.eq(data.currentIndex).addClass(DEFAULT_CLASSES.active);
                 data.$slidesUL.wrap($slidesContainer);
 
                 $prevButton.on('click', function() {
@@ -114,7 +115,7 @@
                         $('<li></li>').appendTo($paginationUL);
                     });
                     data.$paginationLI = $paginationUL.children();
-                    data.$paginationLI.eq(data.currentIndex).addClass(GLOBALS.activeClass);
+                    data.$paginationLI.eq(data.currentIndex).addClass(DEFAULT_CLASSES.active);
                     $paginationUL.appendTo($pagination);
                 }
 
@@ -161,12 +162,14 @@
                             $.when(firstFadeTransition()).done(function(){$.when(secondFadeTransition()).done(transitionEndFunction);});
                         }
                     } else {
-                        data.$slidesUL.animate(data.transitionCssProperty == 'left' ? {'left': -newIndex * data.slidesLISize} : {'top': -newIndex * data.slidesLISize}, data.transitionDuration, data.transitionEasing, transitionEndFunction);
+                        var properties = {};
+                        properties[data.transitionCssProperty] = -newIndex * data.slidesLISize;
+                        data.$slidesUL.animate(properties, data.transitionDuration, data.transitionEasing, transitionEndFunction);
                     }
 
-                    data.$slidesLI.removeClass(GLOBALS.activeClass).eq(newIndex).addClass(GLOBALS.activeClass);
+                    data.$slidesLI.removeClass(DEFAULT_CLASSES.active).eq(newIndex).addClass(DEFAULT_CLASSES.active);
                     if (data.$paginationLI) {
-                        data.$paginationLI.removeClass(GLOBALS.activeClass).eq(newIndex).addClass(GLOBALS.activeClass);
+                        data.$paginationLI.removeClass(DEFAULT_CLASSES.active).eq(newIndex).addClass(DEFAULT_CLASSES.active);
                     }
 
                     data.currentIndex = newIndex;
