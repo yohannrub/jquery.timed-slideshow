@@ -10,8 +10,9 @@ It supports *slide* and *fade* transition effects.
 
 ## Usage
 
-Put your list of slides inside a parent block element, and apply it the CSS class 'slideshow-slides' (by default, see *Options*).  
-You can also add *prev* / *next* buttons and pagination elements by putting them inside the parent block element, and applying them specific CSS classes (see *Options*).  
+Create a top-level block element, then put the list of slides, and optionally *prev* / *next* buttons and pagination elements, inside it (no matter at which sub-level).  
+Apply specific CSS classes to these elements (see *Options*).
+
 Example:
 
 ```html
@@ -32,7 +33,7 @@ Example:
 </div>
 ```
 
-You can then apply the slideshow functions to the parent block element:
+You can then apply the slideshow functions to the top-level block element:
 
 ```javascript
 // Initialize the slideshow for #slideshow-container
