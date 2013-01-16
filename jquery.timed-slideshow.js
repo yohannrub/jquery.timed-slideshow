@@ -1,5 +1,5 @@
 /*!
- * jQuery Timed Slideshow v@1.0.3
+ * jQuery Timed Slideshow v@1.0.4
  * https://github.com/yohannrub/jquery.timed-slideshow
  * Licensed under the MIT license
  */
@@ -38,15 +38,11 @@
                 var $this = $(this);
                 var data = $.extend({}, options);
 
-                var transitionDirectionSlideVertical = (data.transitionDirectionSlide == 'vertical');
-
                 data.isPlaying = false;
                 data.timer = null;
                 data.timeStart = null;
                 data.timeRemaining = data.duration;
                 data.transitionRunning = false;
-                data.transitionCssProperty = transitionDirectionSlideVertical ? 'top' : 'left';
-                data.sizeCssProperty = transitionDirectionSlideVertical ? 'height' : 'width';
                 data.$slidesUL = $this.find('.' + data.slidesClass);
                 data.$slidesLI = data.$slidesUL.children();
                 data.$paginationLI = null;
@@ -84,13 +80,17 @@
                         data.transitionDuration = data.transitionDuration / 2;
                     }
                 } else {
+                    var transitionDirectionSlideVertical = (data.transitionDirectionSlide == 'vertical');
+                    var sizeSlideCssProperty = transitionDirectionSlideVertical ? 'height' : 'width';
+                    data.transitionSlideCssProperty = transitionDirectionSlideVertical ? 'top' : 'left';
+
                     data.$slidesLI.css({
                         'float': transitionDirectionSlideVertical ? 'none' : 'left'
                     });
                     data.slidesLISize = transitionDirectionSlideVertical ? data.$slidesLI.outerHeight(true) : data.$slidesLI.outerWidth(true);
-                    data.$slidesUL.css(data.sizeCssProperty, data.slidesLISize * data.$slidesLI.length)
-                        .css(data.transitionCssProperty, -data.currentIndex * data.slidesLISize);
-                    $slidesContainer.css(data.sizeCssProperty, data.slidesLISize);
+                    data.$slidesUL.css(sizeSlideCssProperty, data.slidesLISize * data.$slidesLI.length)
+                        .css(data.transitionSlideCssProperty, -data.currentIndex * data.slidesLISize);
+                    $slidesContainer.css(sizeSlideCssProperty, data.slidesLISize);
                 }
 
                 data.$slidesLI.eq(data.currentIndex).addClass(DEFAULT_CLASSES.active);
@@ -137,33 +137,37 @@
                 var $this = $(this);
                 var data = $this.data(namespace);
 
-                if(!data.transitionRunning && data.currentIndex != newIndex) {
-                    data.transitionRunning = true;
-                    data.transitionStartCallback.call($this, newIndex);
+                var oldIndex = data.currentIndex;
+                newIndex = mod(newIndex, data.$slidesLI.length);
 
-                    newIndex = mod(newIndex, data.$slidesLI.length);
+                if(!data.transitionRunning && oldIndex != newIndex) {
+                    data.transitionRunning = true;
+
+                    data.currentIndex = newIndex;
+
+                    data.transitionStartCallback.call($this);
 
                     var transitionEndFunction = function() {
                         data.transitionRunning = false;
-                        data.transitionEndCallback.call($this, newIndex);
+                        data.transitionEndCallback.call($this);
                     };
 
                     if (data.transitionEffect == 'fade') {
                         var firstFadeTransition = function() {
-                            return data.$slidesLI.eq(data.currentIndex).fadeTo(data.transitionDuration, 0, data.transitionEasing).css({'z-index': 0});
+                            return data.$slidesLI.eq(oldIndex).fadeTo(data.transitionDuration, 0, data.transitionEasing).css({'z-index': 0});
                         },
                         secondFadeTransition = function() {
                             return data.$slidesLI.eq(newIndex).fadeTo(data.transitionDuration, 1, data.transitionEasing).css({'z-index': 1});
                         };
 
                         if (data.transitionCrossfade) {
-                            $.when(function(){firstFadeTransition(); secondFadeTransition(); return data.$slidesLI;}()).done(transitionEndFunction);
+                            $.when(firstFadeTransition(), secondFadeTransition()).done(transitionEndFunction);
                         } else {
-                            $.when(firstFadeTransition()).done(function(){$.when(secondFadeTransition()).done(transitionEndFunction);});
+                            $.when(firstFadeTransition()).done(function() {$.when(secondFadeTransition()).done(transitionEndFunction);});
                         }
                     } else {
                         var properties = {};
-                        properties[data.transitionCssProperty] = -newIndex * data.slidesLISize;
+                        properties[data.transitionSlideCssProperty] = -newIndex * data.slidesLISize;
                         data.$slidesUL.animate(properties, data.transitionDuration, data.transitionEasing, transitionEndFunction);
                     }
 
@@ -171,8 +175,6 @@
                     if (data.$paginationLI) {
                         data.$paginationLI.removeClass(DEFAULT_CLASSES.active).eq(newIndex).addClass(DEFAULT_CLASSES.active);
                     }
-
-                    data.currentIndex = newIndex;
 
                     $this[namespace]('reset');
                 }
