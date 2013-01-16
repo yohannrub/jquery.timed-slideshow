@@ -10,7 +10,7 @@ It supports *slide* and *fade* transition effects.
 
 ## Usage
 
-Create a top-level block element, then put the list of slides, and optionally *prev* / *next* buttons and pagination elements, inside it (no matter at which sub-level).  
+Create a top-level block element, then put the list of slides, and optionally previous/next buttons and pagination elements, inside it (no matter at which sub-level).
 Apply specific CSS classes to these elements (see *Options*).
 
 Example:
