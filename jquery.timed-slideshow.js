@@ -1,5 +1,5 @@
 /*!
- * jQuery Timed Slideshow v@1.0.4
+ * jQuery Timed Slideshow v@1.0.5
  * https://github.com/yohannrub/jquery.timed-slideshow
  * Licensed under the MIT license
  */
@@ -69,8 +69,8 @@
                         'position': 'absolute',
                         'z-index': 0,
                         'opacity': 0
-                    });
-                    data.$slidesLI.eq(data.currentIndex).css({
+                    }).eq(data.currentIndex).css({
+                        'z-index': 1,
                         'opacity': 1
                     });
                     data.$slidesUL.css({
@@ -153,17 +153,14 @@
                     };
 
                     if (data.transitionEffect == 'fade') {
-                        var firstFadeTransition = function() {
-                            return data.$slidesLI.eq(oldIndex).fadeTo(data.transitionDuration, 0, data.transitionEasing).css({'z-index': 0});
-                        },
-                        secondFadeTransition = function() {
-                            return data.$slidesLI.eq(newIndex).fadeTo(data.transitionDuration, 1, data.transitionEasing).css({'z-index': 1});
+                        var fadeTransition = function(which) {
+                            return data.$slidesLI.eq([oldIndex, newIndex][which]).fadeTo(data.transitionDuration, [0, 1][which], data.transitionEasing).css({'z-index': [0, 1][which]});
                         };
 
                         if (data.transitionCrossfade) {
-                            $.when(firstFadeTransition(), secondFadeTransition()).done(transitionEndFunction);
+                            $.when(fadeTransition(0), fadeTransition(1)).done(transitionEndFunction);
                         } else {
-                            $.when(firstFadeTransition()).done(function() {$.when(secondFadeTransition()).done(transitionEndFunction);});
+                            $.when(fadeTransition(0)).done(function() {$.when(fadeTransition(1)).done(transitionEndFunction);});
                         }
                     } else {
                         var properties = {};
