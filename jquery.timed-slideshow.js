@@ -1,5 +1,5 @@
 /*!
- * jQuery Timed Slideshow v@1.0.5
+ * jQuery Timed Slideshow v@1.1
  * https://github.com/yohannrub/jquery.timed-slideshow
  * Licensed under the MIT license
  */
@@ -17,6 +17,7 @@
         transitionEasing: null,
         transitionStartCallback: $.noop,
         transitionEndCallback: $.noop,
+        sizeSlide: 1,
         startIndex: 0,
         slidesClass: 'slideshow-slides',
         prevClass: 'slideshow-prev',
@@ -30,28 +31,35 @@
 
     var namespace = 'slideshow';
 
+    function mod(num, modulo) {
+        var remain = num % modulo;
+        return (remain >= 0 ? remain : remain + modulo);
+    }
+
     var methods = {
         init: function(options) {
             options = $.extend({}, DEFAULT_SETTINGS, options);
 
             return this.each(function() {
-                var $this = $(this);
-                var data = $.extend({}, options);
+                var $this = $(this),
+                    data = $.extend({}, options);
 
                 data.isPlaying = false;
                 data.timer = null;
                 data.timeStart = null;
-                data.timeRemaining = data.duration;
+                data.timePause = null;
+                data.timeRemaining = null;
                 data.transitionRunning = false;
                 data.$slidesUL = $this.find('.' + data.slidesClass);
                 data.$slidesLI = data.$slidesUL.children();
                 data.$paginationLI = null;
                 data.currentIndex = mod(data.startIndex, data.$slidesLI.length);
+                data.lastIndex = (data.transitionEffect == 'fade') ? data.$slidesLI.length - 1 : data.$slidesLI.length - data.sizeSlide;
 
                 var $prevButton = $this.find('.' + data.prevClass),
                     $nextButton = $this.find('.' + data.nextClass),
-                    $pagination = $this.find('.' + data.paginationClass);
-                var $slidesContainer = $('<div></div>');
+                    $pagination = $this.find('.' + data.paginationClass),
+                    $slidesContainer = $('<div></div>');
 
                 $slidesContainer.css({
                     'overflow': 'hidden'
@@ -90,30 +98,27 @@
                     data.slidesLISize = transitionDirectionSlideVertical ? data.$slidesLI.outerHeight(true) : data.$slidesLI.outerWidth(true);
                     data.$slidesUL.css(sizeSlideCssProperty, data.slidesLISize * data.$slidesLI.length)
                         .css(data.transitionSlideCssProperty, -data.currentIndex * data.slidesLISize);
-                    $slidesContainer.css(sizeSlideCssProperty, data.slidesLISize);
+                    $slidesContainer.css(sizeSlideCssProperty, data.slidesLISize * data.sizeSlide);
                 }
 
                 data.$slidesLI.eq(data.currentIndex).addClass(DEFAULT_CLASSES.active);
                 data.$slidesUL.wrap($slidesContainer);
 
                 $prevButton.on('click', function() {
-                    $this[namespace]('slide', data.currentIndex - data.transitionStep);
-                    return false;
+                    $this[namespace]('slideNext', true);
                 });
                 $nextButton.on('click', function() {
-                    $this[namespace]('slide', data.currentIndex + data.transitionStep);
-                    return false;
+                    $this[namespace]('slideNext');
                 });
 
                 if ($pagination.length) {
                     var $paginationUL = $('<ul></ul>');
                     $paginationUL.on('click', 'li', function() {
                         $this[namespace]('slide', $(this).index());
-                        return false;
                     });
-                    data.$slidesLI.each(function() {
+                    for (var i = 0; i <= data.lastIndex; i++) {
                         $('<li></li>').appendTo($paginationUL);
-                    });
+                    }
                     data.$paginationLI = $paginationUL.children();
                     data.$paginationLI.eq(data.currentIndex).addClass(DEFAULT_CLASSES.active);
                     $paginationUL.appendTo($pagination);
@@ -127,25 +132,29 @@
             });
         },
 
-        getCurrentIndex: function() {
-            var data = this.data(namespace);
-            return data.currentIndex;
+        slideNext: function(reverse) {
+            return this.each(function() {
+                var $this = $(this),
+                    data = $this.data(namespace);
+
+                var newIndex = mod(data.currentIndex + (reverse ? -1 : 1) * data.transitionStep, data.$slidesLI.length);
+                if (newIndex > data.lastIndex) {
+                    newIndex = (data.currentIndex == data.lastIndex) ? 0 : data.lastIndex;
+                }
+                $this[namespace]('slide', newIndex);
+            });
         },
 
         slide: function(newIndex) {
             return this.each(function() {
-                var $this = $(this);
-                var data = $this.data(namespace);
+                var $this = $(this),
+                    data = $this.data(namespace);
 
                 var oldIndex = data.currentIndex;
                 newIndex = mod(newIndex, data.$slidesLI.length);
 
                 if(!data.transitionRunning && oldIndex != newIndex) {
                     data.transitionRunning = true;
-
-                    data.currentIndex = newIndex;
-
-                    data.transitionStartCallback.call($this);
 
                     var transitionEndFunction = function() {
                         data.transitionRunning = false;
@@ -163,6 +172,9 @@
                             $.when(fadeTransition(0)).done(function() {$.when(fadeTransition(1)).done(transitionEndFunction);});
                         }
                     } else {
+                        if (newIndex > data.lastIndex) {
+                            newIndex = data.lastIndex;
+                        }
                         var properties = {};
                         properties[data.transitionSlideCssProperty] = -newIndex * data.slidesLISize;
                         data.$slidesUL.animate(properties, data.transitionDuration, data.transitionEasing, transitionEndFunction);
@@ -173,6 +185,10 @@
                         data.$paginationLI.removeClass(DEFAULT_CLASSES.active).eq(newIndex).addClass(DEFAULT_CLASSES.active);
                     }
 
+                    data.currentIndex = newIndex;
+
+                    data.transitionStartCallback.call($this);
+
                     $this[namespace]('reset');
                 }
             });
@@ -180,15 +196,16 @@
 
         play: function() {
             return this.each(function() {
-                var $this = $(this);
-                var data = $this.data(namespace);
+                var $this = $(this),
+                    data = $this.data(namespace);
 
                 if (!data.isPlaying) {
                     data.isPlaying = true;
                     clearTimeout(data.timer);
+                    data.timeRemaining = (data.timeStart && data.timePause) ? data.timeRemaining - (data.timePause - data.timeStart) : data.duration;
                     data.timeStart = $.now();
                     data.timer = setTimeout(function() {
-                        $this[namespace]('slide', data.currentIndex + data.transitionStep);
+                        $this[namespace]('slideNext');
                     }, data.timeRemaining);
                 }
             });
@@ -196,35 +213,32 @@
 
         pause: function() {
             return this.each(function() {
-                var $this = $(this);
-                var data = $this.data(namespace);
+                var $this = $(this),
+                    data = $this.data(namespace);
 
                 if (data.isPlaying) {
                     data.isPlaying = false;
                     clearTimeout(data.timer);
-                    if (data.timeStart) {
-                        data.timeRemaining = data.timeRemaining - ($.now() - data.timeStart);
-                    }
+                    data.timePause = $.now();
                 }
             });
         },
 
         reset: function() {
             return this.each(function() {
-                var $this = $(this);
-                var data = $this.data(namespace);
+                var $this = $(this),
+                    data = $this.data(namespace);
 
-                data.timeRemaining = data.duration;
-                data.isPlaying = false;
+                $this[namespace]('pause');
+                data.timeStart = data.timePause = null;
                 $this[namespace]('play');
             });
+        },
+
+        getCurrentIndex: function() {
+            return this.data(namespace).currentIndex;
         }
     };
-
-    function mod(num, modulo) {
-        var remain = num % modulo;
-        return Math.floor(remain >= 0 ? remain : remain + modulo);
-    }
 
     $.fn[namespace] = function(method) {
         if (methods[method]) {
