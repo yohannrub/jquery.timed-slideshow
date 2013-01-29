@@ -51,6 +51,9 @@ $('#slideshow-container').slideshow('reset');
 // Will go to first slide (parameter can be any integer between 0 and [number of slides]-1)
 $('#slideshow-container').slideshow('slide', 0);
 
+// Will go to previous/next slide, taking into account the provided *transitionStep* (see *Options*) (parameter can be true for previous, otherwise go to next)
+$('#slideshow-container').slideshow('slideNext', true);
+
 // Will retrieve the current slide index (integer between 0 and [number of slides]-1)
 var currentIndex = $('#slideshow-container').slideshow('getCurrentIndex');
 ```
@@ -73,7 +76,8 @@ $('#slideshow-container').slideshow({
     transitionEasing: null,                  // easing of transition
     transitionStartCallback: function(){},   // function to be called at start of each transition
     transitionEndCallback: function(){},     // function to be called at end of each transition
-    startIndex: 0,                           // index of the first slide to display
+    sizeSlide: 1,                            // number of slides visible at any moment (integer between 1 and [number of slides])
+    startIndex: 0,                           // index of the first slide to display (integer between 0 and [number of slides]-1)
     slidesClass: 'slideshow-slides',         // CSS class of slides list element
     prevClass: 'slideshow-prev',             // CSS class of previous button element
     nextClass: 'slideshow-next',             // CSS class of next button element
